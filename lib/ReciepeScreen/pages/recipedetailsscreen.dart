@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_diy_beauty_products/Colors/colors.dart';
 import 'package:new_diy_beauty_products/ReciepeScreen/provider/reciepeprovider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReceipeDetailsScreen extends StatefulWidget {
   static const routeName = 'recipe_details_screen';
@@ -14,6 +15,14 @@ class ReceipeDetailsScreen extends StatefulWidget {
 }
 
 class _ReceipeDetailsScreenState extends State<ReceipeDetailsScreen> {
+   void _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     Size size=MediaQuery.of(context).size;
@@ -55,8 +64,18 @@ class _ReceipeDetailsScreenState extends State<ReceipeDetailsScreen> {
             Text('8. Storage',style: TextStyle(color: appcolor,fontWeight: FontWeight.bold,fontSize: 14),),
             Text(recipeData.storage),
             SizedBox(height: size.height*0.02,),
-            Text('9. Youtube Link',style: TextStyle(color: appcolor,fontWeight: FontWeight.bold,fontSize: 14),),
-            Text(recipeData.link,style: TextStyle(color: Colors.blue),),
+          Text('9. YouTube Link',
+                  style: TextStyle(
+                      color: appcolor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14)),
+              GestureDetector(
+                onTap: () => _launchURL(recipeData.link),
+                child: Text(
+                  recipeData.link,
+                  style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                ),
+              ),
             SizedBox(height: size.height*0.02,),
             Text('10. Creator',style: TextStyle(color: appcolor,fontWeight: FontWeight.bold,fontSize: 14),),
             Text(recipeData.creator)

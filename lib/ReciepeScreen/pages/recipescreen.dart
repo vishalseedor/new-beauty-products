@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_diy_beauty_products/Colors/colors.dart';
 import 'package:new_diy_beauty_products/ExtraScreens/loadingscreen.dart';
+import 'package:new_diy_beauty_products/ReciepeScreen/pages/emptyrecipescreen.dart';
 import 'package:new_diy_beauty_products/ReciepeScreen/provider/reciepeprovider.dart';
 import 'package:new_diy_beauty_products/ReciepeScreen/widgets/allrecipewidget.dart';
 import 'package:provider/provider.dart';
@@ -62,11 +63,7 @@ class _ReciepeScreenState extends State<ReciepeScreen> {
                                 ],
                               )
                             : recipe.recipes.isEmpty
-                                ? const Center(
-                                    child: Text(
-                                    'No Categoeies...',
-                                    style: TextStyle(color:Colors.green),
-                                  ))
+                                ? const Emptyrecipescreen()
                                 : SizedBox(
                                     //height: size.height * 0.6,
                                     child: ListView.builder(

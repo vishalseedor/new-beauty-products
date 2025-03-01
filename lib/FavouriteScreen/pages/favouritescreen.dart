@@ -68,7 +68,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.98,
+                childAspectRatio: 0.85,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),

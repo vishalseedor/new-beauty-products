@@ -11,6 +11,7 @@ import 'package:new_diy_beauty_products/ExtraScreens/loadingscreen.dart';
 import 'package:new_diy_beauty_products/ProfileScreen/provider/userprovider.dart';
 
 import 'package:provider/provider.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 
 
@@ -198,30 +199,30 @@ class _CartScreenState extends State<CartScreen> {
                            
                             GestureDetector(
                               onTap: () async {
-                                //  payment();
-                                // Razorpay razorpay = Razorpay();
-                                // var options = {
-                                //   'key': 'rzp_test_1DP5mmOlF5G5ag',
-                                //   'amount': cart.totalAmount * 100,
-                                //   'name': 'DIY Beauty Products and Tips',
-                                //   'description': 'Fine T-Shirt',
-                                //   'retry': {'enabled': true, 'max_count': 1},
-                                //   'send_sms_hash': true,
-                                //   'prefill': {
-                                //     'contact': '8888888888',
-                                //     'email': 'test@razorpay.com'
-                                //   },
-                                //   'external': {
-                                //     'wallets': ['paytm']
-                                //   }
-                                // };
-                                // razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
-                                //     handlePaymentErrorResponse);
-                                // razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
-                                //     handlePaymentSuccessResponse);
-                                // razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET,
-                                //     handleExternalWalletSelected);
-                                // razorpay.open(options);
+                                // payment();
+                                Razorpay razorpay = Razorpay();
+                                var options = {
+                                  'key': 'rzp_test_1DP5mmOlF5G5ag',
+                                  'amount': cart.totalAmount * 100,
+                                  'name': 'DIY Beauty Products and Tips',
+                                  'description': 'Fine T-Shirt',
+                                  'retry': {'enabled': true, 'max_count': 1},
+                                  'send_sms_hash': true,
+                                  'prefill': {
+                                    'contact': '8888888888',
+                                    'email': 'test@razorpay.com'
+                                  },
+                                  'external': {
+                                    'wallets': ['paytm']
+                                  }
+                                };
+                                razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
+                                    handlePaymentErrorResponse);
+                                razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
+                                    handlePaymentSuccessResponse);
+                                razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET,
+                                    handleExternalWalletSelected);
+                                razorpay.open(options);
                               },
                               child: Container(
                                 height: size.height * 0.05,
@@ -251,7 +252,7 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
-}
+
 // Future<void>payment()async{
 // try{
 //   Map<String ,dynamic>body={
@@ -288,57 +289,57 @@ class _CartScreenState extends State<CartScreen> {
 
 //   }
 
-//   void handlePaymentErrorResponse(PaymentFailureResponse response) {
-//     /*
-//     * PaymentFailureResponse contains three values:
-//     * 1. Error Code
-//     * 2. Error Description
-//     * 3. Metadata
-//     * */
-//     showAlertDialog(context, "Payment Failed",
-//         "Code: ${response.code}\nDescription: ${response.message}\nMetadata:${response.error.toString()}");
-//   }
+  void handlePaymentErrorResponse(PaymentFailureResponse response) {
+    /*
+    * PaymentFailureResponse contains three values:
+    * 1. Error Code
+    * 2. Error Description
+    * 3. Metadata
+    * */
+    showAlertDialog(context, "Payment Failed",
+        "Code: ${response.code}\nDescription: ${response.message}\nMetadata:${response.error.toString()}");
+  }
 
-//   void handlePaymentSuccessResponse(PaymentSuccessResponse response) async {
-//     final userProvider = Provider.of<UserProvider>(context, listen: false);
-//     isLoading = true;
-//     setState(() {
+  void handlePaymentSuccessResponse(PaymentSuccessResponse response) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    isLoading = true;
+    setState(() {
 
-//     });
-//     await context
-//         .read<CartProvider>()
-//         .placeOrderApi(userid: userProvider.currentUserId).then((value) {
-//            isLoading = false;
-//     setState(() {
+    });
+    await context
+        .read<CartProvider>()
+        .placeOrderApi(userid: userProvider.currentUserId).then((value) {
+           isLoading = false;
+    setState(() {
 
-//     });
-//         });
-//         Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>const OrderSuccessScreen()));
-//     print(response.data.toString());
-//   }
+    });
+        });
+        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>const OrderSuccessScreen()));
+    print(response.data.toString());
+  }
 
-//   void handleExternalWalletSelected(ExternalWalletResponse response) {
-//     showAlertDialog(
-//         context, "External Wallet Selected", "${response.walletName}");
-//   }
+  void handleExternalWalletSelected(ExternalWalletResponse response) {
+    showAlertDialog(
+        context, "External Wallet Selected", "${response.walletName}");
+  }
 
-//   void showAlertDialog(BuildContext context, String title, String message) {
-//     // set up the buttons
-//     Widget continueButton = ElevatedButton(
-//       child: const Text("Continue"),
-//       onPressed: () {},
-//     );
-//     // set up the AlertDialog
-//     AlertDialog alert = AlertDialog(
-//       title: Text(title),
-//       content: Text(message),
-//     );
-//     // show the dialog
-//     showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return alert;
-//       },
-//     );
-//   }
-// }
+  void showAlertDialog(BuildContext context, String title, String message) {
+    // set up the buttons
+    Widget continueButton = ElevatedButton(
+      child: const Text("Continue"),
+      onPressed: () {},
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(message),
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+}

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:new_diy_beauty_products/GetStatredScreen/getstatredscreen.dart';
 import 'package:new_diy_beauty_products/Helpers/provider.dart';
 import 'package:new_diy_beauty_products/Helpers/routes.dart';
+import 'package:new_diy_beauty_products/Splashscreen/spalshscreen.dart';
 import 'package:provider/provider.dart';
 
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor:Colors.green),
           useMaterial3: true,
         ),
-        home: const WelcomePage(),
+        home: const SplashScreen(),
         routes: customRoutes
           
           

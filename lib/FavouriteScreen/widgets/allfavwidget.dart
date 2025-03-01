@@ -51,7 +51,7 @@ class _AllFavouriteWidgetState extends State<AllFavouriteWidget > {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(                                               
-                height: size.height*0.15,
+                height: size.height*0.17,
                 alignment: Alignment.topRight,
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),

@@ -21,17 +21,16 @@ class _AllCategoryWidgetState extends State<AllCategoryWidget> {
          Navigator.of(context)
                 .pushNamed(AllCategoryEachScreen.routeName,arguments:widget.id);
       },
-      child: Container(
-                    height: 200,
-                    width: 200,
-                    decoration: BoxDecoration(color: Colors.brown[100],borderRadius: BorderRadius.circular(20)),
+      child: Card(
+        elevation: 5,
+                 
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
+                    
                       children: [
-                        Image.network(widget.image,height: 100,width: 100,),
-                         SizedBox(height: size.height*0.02),
-                        Text(widget.categoryname,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)
+                        Image.network(widget.image,scale: 4),
+                     
+                        Text(widget.categoryname,style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold),)
                       ],
                     ),
                   ),

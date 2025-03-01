@@ -1,250 +1,313 @@
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:new_diy_beauty_products/BottomNavigationBar/bottomnavigationbar.dart';
 import 'package:new_diy_beauty_products/Colors/colors.dart';
+import 'package:new_diy_beauty_products/LoginScreen/loginscreen.dart';
 import 'package:new_diy_beauty_products/ProfileScreen/provider/userprovider.dart';
-
 import 'package:provider/provider.dart';
 
+
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-    @override
+  @override
   void initState() {
     Provider.of<UserProvider>(context,listen: false).getUsertData(context: context);
     super.initState();
   }
-
-  @override
+  
+  
+  
+  @override 
   Widget build(BuildContext context) {
+    
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomePage()));
+        }, icon: Icon(Icons.arrow_back,color: Colors.white,)),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor:appcolor,
-        title: const Text('Profile',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16)),
-        
+        backgroundColor: appcolor,
+        title: Text('Profile',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
       ),
-    
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text('Profile',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 19),),
-              const SizedBox(height: 20.0),
-
-             Stack(
-  children: [
-    const CircleAvatar(
-      backgroundColor: Color(0xff00A3FF),
-      backgroundImage: AssetImage("assets/new.png"),
-      radius: 70.0,
-    ),
-    
-    // Positioned(
-    //   right: 5,
-    //   bottom: 0,
-    //   child: Container(
-    //     child: const Icon(Icons.camera_alt_outlined,color: Colors.black,size: 20,),
-    //     padding: const EdgeInsets.all(7.5),
-    //     decoration: BoxDecoration(
-    //       border: Border.all(
-    //       width: 1,
-    //       color: Colors.white
-    //     ),
-    //     borderRadius: BorderRadius.circular(90.0),
-    //     color: Colors.grey[200]
-    //     )
-    //   )
-    // )
-  ]
-),
-SizedBox(height:14),
- Consumer<UserProvider>(builder: (context, value, child) {
-                String userAddress = "";
-                for (var i = 0; i < value.users.length; i++) {
-                  userAddress = value.users[i].name;
-                  print(userAddress+'vvvvvvvvv');
-                }
-                return Text(
-                  '$userAddress',
-                 style:Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold,fontSize: 16),
-                );
-              }),
-            // Profile picture section
-         //   profilePicture(), // Replace with your implementation
-
-            // User information section
-            const SizedBox(height: 20.0),
-            Container(
-              height: 60,
-              width: double.infinity,
-              decoration: BoxDecoration(color: Colors.grey[200],borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.person_outline,color: appcolor),
-                        SizedBox(width: 10),
-                        Text('Name',style: TextStyle(color: appcolor,fontWeight: FontWeight.bold),)
-                      ],
-                    ),
-                     Consumer<UserProvider>(builder: (context, value, child) {
-                String userAddress = "";
-                for (var i = 0; i < value.users.length; i++) {
-                  userAddress = value.users[i].name;
-                  print(userAddress+'vvvvvvvvv');
-                }
-                return Text(
-                  '$userAddress',
-                 style:Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
-                );
-              }),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 15.0),
-          //  TextFormField(
-          //     decoration:  InputDecoration(
-          //       fillColor: Colors.grey[200],
-          //       filled: true,
-          //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none),
-          //       prefixIcon: Icon(Icons.email,color: appcolor,),
-          //       hintText: "Email",
-          //       hintStyle: TextStyle(color: appcolor,fontWeight: FontWeight.bold,fontSize: 13)
-          //     ),
-          // 
-          //   ),
-            Container(
-              height: 60,
-              width: double.infinity,
-              decoration: BoxDecoration(color: Colors.grey[200],borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.email_outlined,color: appcolor),
-                        SizedBox(width: 10),
-                        Text('Email',style: TextStyle(color: appcolor,fontWeight: FontWeight.bold),)
-                      ],
-                    ),
-                     Consumer<UserProvider>(builder: (context, value, child) {
-                String userAddress = "";
-                for (var i = 0; i < value.users.length; i++) {
-                  userAddress = value.users[i].email;
-                  print(userAddress+'vvvvvvvvv');
-                }
-                return Text(
-                  '$userAddress',
-                  style:Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
-                );
-              }),
-                  ],
-                ),
-              ),
-            ),
-         
+          backgroundColor: Colors.grey[100],
+          body: SingleChildScrollView(
+    child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+           
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Consumer<UserProvider>(builder: (context, value, child) {
+            String userName = "";
+            for (var i = 0; i < value.users.length; i++) {
+              userName = value.users[i].name;
+            }
+            return Text(
+              userName,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            );
+          }),
+           Consumer<UserProvider>(builder: (context, value, child) {
+            String useremail = "";
+            for (var i = 0; i < value.users.length; i++) {
+              useremail = value.users[i].email;
+            }
+            return Text(
+              useremail,
+              style: const TextStyle(
+               
+                  fontWeight: FontWeight.bold),
+            );
+          }),
           
-            SizedBox(height: 15.0,),
-             Container(
-              height: 60,
-              width: double.infinity,
-              decoration: BoxDecoration(color: Colors.grey[200],borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+           
+                     
+                    ],
+                  ),
+                    Consumer<UserProvider>(builder: (context, value, child) {
+            String userphoto = "";
+            for (var i = 0; i < value.users.length; i++) {
+              userphoto = value.users[i].image;
+            }
+            return CircleAvatar(
+              backgroundColor: Colors.grey[100],
+              radius: 60,
+              backgroundImage: AssetImage('assets/profile.png'),
+            );
+          }),
+                  // GestureDetector(
+                  //   onTap: () {
+                    
+                  //   },
+                  //   child: CircleAvatar(
+                  //     radius: 45,
+                  //     child: Image.asset('assets/profile.png'),
+                  //   ),
+                  // )
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.03,
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: size.height,
+          width: size.width,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30), color: Colors.white),
+          child: Column(
+            children: [
+             
+              Padding(
+                padding: const EdgeInsets.all(30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.lock_outlined,color: appcolor),
-                        SizedBox(width: 10),
-                        Text('Password',style: TextStyle(color: appcolor,fontWeight: FontWeight.bold),)
+                        InkWell(
+                          onTap: () {
+                           // Navigator.push(context,MaterialPageRoute(builder:(context)=>const pr()));
+                          },
+                          child: Icon(
+                            Icons.person,
+                            size: 25,
+                            color: appcolor
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.02,
+                        ),
+                        const Text('Edit Profile',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w600)),
                       ],
                     ),
-                     Consumer<UserProvider>(builder: (context, value, child) {
-                String userAddress = "";
-                for (var i = 0; i < value.users.length; i++) {
-                  userAddress = value.users[i].password;
-                  print(userAddress+'vvvvvvvvv');
-                }
-                return Text(
-                  '$userAddress',
-                  style:Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
-                );
-              }),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 31),
+                      child: Text(
+                        'Edit your profile',
+                        style: TextStyle(color: Colors.grey, fontSize: 13),
+                      ),
+                    )
                   ],
                 ),
               ),
-            ),
-            // Row(
-            //   children: [
-            //     Text("Sex:"),
-            //     SizedBox(width: 10.0),
-            //     Row(
-            //       children: [
-            //         Radio<String>(
-            //           value: "male",
-            //           groupValue: _sex,
-            //          : (value) => _onSexSelected(value!),
-            //         ),
-            //         Text("Male"),
-            //         SizedBox(width: 10.0),
-            //         Radio<String>(
-            //           value: "female",
-            //           groupValue: _sex,
-            //          : (value) => _onSexSelected(value!),
-            //         ),
-            //         Text("Female"),
-            //         SizedBox(width: 10.0),
-            //         Radio<String>(
-            //           value: "other",
-            //           groupValue: _sex,
-            //          : (value) => _onSexSelected(value!),
-            //         ),
-            //         Text("Other"),
-            //       ],
-            //     ),
-            //   ],
-            // ),
-            const SizedBox(height: 25.0),
-
-            // Action buttons section
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //     ElevatedButton(
-            //       style: ElevatedButton.styleFrom(backgroundColor: appcolor),
-            //       onPressed: (){
-            //       Navigator.push(context,MaterialPageRoute(builder:(context)=>const ProfileEditScreen()));
-            //       },
-            //       child: const Text("Edit Profile",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-            //     ),
-            //      ElevatedButton(
-            //       style: ElevatedButton.styleFrom(backgroundColor: appcolor),
-            //       onPressed: (){},
-            //       child: const Text("Cancel",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-            //     ),
-            //   ],
-            // ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                           // Navigator.push(context,MaterialPageRoute(builder:(context)=>const TermsandConditions()));
+                          },
+                          child: Icon(
+                            Icons.book,
+                            size: 25,
+                            color: appcolor,
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.02,
+                        ),
+                        const Text('Terms & Conditions',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w600)),
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 31),
+                      child: Text(
+                        'Know terms of use',
+                        style: TextStyle(color: Colors.grey, fontSize: 13),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: (){
+                           // Navigator.push(context,MaterialPageRoute(builder: (context)=>const PrivacyandPolicy()));
+                          },
+                          child: Icon(
+                            Icons.privacy_tip,
+                            size: 25,
+                            color: appcolor,
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.02,
+                        ),
+                        const Text('Privacy Policy',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w600)),
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 31),
+                      child: Text(
+                        'Companies privacy policy',
+                        style: TextStyle(color: Colors.grey, fontSize: 13),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: (){
+                            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text(
+                    'Logout', 
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
+                  ),
+                  content:
+                      const Text('Are you sure want to exit this app?',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 14),),
+                  actions: <Widget>[
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(backgroundColor: appcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()));
+                      },
+                      child: const Text(
+                        'OK',
+                        style: TextStyle(
+                          fontSize: 12,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                    ElevatedButton(
+                            style: ElevatedButton.styleFrom(backgroundColor:appcolor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                      onPressed: () {
+                        // Close the dialog
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text(
+                        'CANCEL',
+                        style: TextStyle(
+                           fontSize: 12,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    )
+                  ],
+                );
+              },
+            );
+                          },
+                          child: Icon(
+                            Icons.logout,
+                            size: 25,
+                            color: appcolor,
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.02,
+                        ),
+                        const Text('Logout',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w600)),
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 31),
+                      child: Text(
+                        'Sign out from account',
+                        style: TextStyle(color: Colors.grey, fontSize: 13),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      ],
+    ),
+          ),
+        );
   }
-
-  // Widget profilePicture() {
-  //   // Replace with your desired profile picture implementation
-  //   // (e.g., placeholder
-  // }
 }

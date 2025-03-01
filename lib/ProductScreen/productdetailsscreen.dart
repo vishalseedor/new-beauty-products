@@ -26,10 +26,12 @@ static const routeName = 'product_details_screen';
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  bool isFavorite=false;
   
 
   @override
   Widget build(BuildContext context) {
+    final size=MediaQuery.of(context).size;
    GlobalSnackBar _snackBar =GlobalSnackBar();
   ProductSnackBar _productSnackBar=ProductSnackBar();
       final product = Provider.of<ProductProvider>(context,listen: false);
@@ -44,17 +46,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor:Color.fromARGB(255, 12, 117, 14),
         title: const Text("Product Details",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.shopping_cart,size: 35),
-          ),
-        ],
+       
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          Container(
+          Container( 
             height: 350,
             width: double.infinity,
             margin: const EdgeInsets.only(bottom: 16),
@@ -91,30 +88,109 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   .copyWith(fontWeight: FontWeight.bold)),
           const SizedBox(height: 5),
 
-          Text('Body perfumes typically consist of a blend of aromatic compounds, essential oils, alcohol, and water. These fragrances may also contain fixatives to stabilize the scent and extend its longevity, as well as preservatives to maintain product freshness. The exact composition can vary greatly depending on the desired fragrance profile, with some perfumes focusing on floral notes, others on fruity or woody scents'),
+          Text(productData.description),
          
           const SizedBox(height: 20),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: (){
-                fav.addItemToFavourites(productid: productData.id.toString(),userid: userData.currentUserId.toString());
+             Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+               Container(
+     height: size.height*0.07,
+                  width: size.width*0.16,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: appcolor),
+      ),
+      child: InkWell(
+  onTap: () async {
+    setState(() {
+      isFavorite = !isFavorite;
+      
+      if (isFavorite) {
+         fav.addItemToFavourites(productid: productData.id.toString(),userid: userData.currentUserId.toString());
                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                   backgroundColor:appcolor,
                                   content: const Text("Favourite Product Added Successfully",style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)));
-                },
-                child: Container(
-                  height: 60,
-                  width: 70,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),color: appcolor),
-                  child: Icon(Icons.favorite,color: Colors.white,),
-                ),
+
+     
+      } else {
+         fav.deleteFav(productData.id,userData.currentUserId.toString(),context);
+        
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: appcolor,
+            content: const Text(
+              'Favourite products removed from Favourites!',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
-               GestureDetector(
-                onTap: (){
-                   final provider =
+            ),
+            duration: const Duration(seconds: 4),
+          ),
+        );
+     
+      }
+    });
+  },
+  child: Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          isFavorite ? Icons.favorite : Icons.favorite_border,
+          color: appcolor,
+        ),
+      ],
+    ),
+  ),
+)
+
+      // child: InkWell(
+      //   onTap: ()async{
+      //     setState(() {
+      //       isFavorite=!isFavorite;
+      //        favpet.addItemToFavourites(petid: petData.petid.toString(),userid: user.currentUserId.toString());
+      //       ScaffoldMessenger.of(context).showSnackBar(
+      //                     SnackBar(
+      //                       backgroundColor: purpleColor,
+      //                       content: const Text(
+      //                         'Pet added to Favourite Succcessfully !',
+      //                         style: TextStyle(
+      //                             color: Colors.white,
+      //                             fontWeight: FontWeight.bold),
+      //                       ),
+      //                       duration: const Duration(seconds: 4),
+      //                     ), 
+      //                   );
+      // // Navigator.push(context,MaterialPageRoute(builder: (context)=>const PetFavouritePage()));
+      //     });
+           
+
+      //   },
+      //   child: Center(child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Icon(isFavorite?Icons.favorite:Icons.favorite_border,color: Colors.red)
+      //       // Image.asset('assets/fav.png',height: 25,width: 25),
+      //     ],
+      //   ))),
+      // child: IconButton(
+      //   onPressed: ()async {
+      //    favpet.addItemToFavourites(petid: petData.petId.toString(),userid: user.currentUserId.toString());
+      //       SnackBar(backgroundColor: purpleColor,content: const Text('Item add to favourite successfully'),duration: const Duration(seconds: 4),);
+      //    await Navigator.push(context,MaterialPageRoute(builder: (context)=>const PetFavouritePage()));
+          
+      //   },
+      //   icon: const Icon(
+      //   Icons.favorite,color: Colors.red,
+      //   ),
+      // ),
+    ),
+                  InkWell(
+                    onTap: () async{
+                                      final provider =
                                   Provider.of<CartProvider>(context,listen: false);
                               bool isInCart = provider.carts.any(
                                   (item) => item.productId == widget.id);
@@ -147,26 +223,99 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               //     context,
                               //     MaterialPageRoute(
                               //         builder: (context) => MyCartScreen()));
-                              }
+  
+                    }},
+                    child: Container(
+                     height: size.height*0.07,
+                     width: size.width*0.65,
+                    decoration: BoxDecoration(
+                      color: appcolor,
+                      borderRadius: BorderRadius.circular(10)),
+                      child:  Center(child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                         Image.asset('assets/cart.png',height: 30,width: 30,color: Colors.white,),
+                          SizedBox(width: size.width*0.06),
+                          const Text('Add to cart',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900),),
+                        ],
+                      )),
+                                       ),
+                  ),
+                ],
+              )
 
-                },
-                 child: Container(
-                  height: 60,
-                  width: 300,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),color: appcolor),
-                  child:Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                       Icon(IconlyLight.bag2,color: Colors.white,),
-                       SizedBox(width: 10),
-                       Text('Add to cart',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)
-                    ],
-                  )
-                               ),
-               ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     GestureDetector(
+          //       onTap: (){
+          //       fav.addItemToFavourites(productid: productData.id.toString(),userid: userData.currentUserId.toString());
+          //        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          //                         backgroundColor:appcolor,
+          //                         content: const Text("Favourite Product Added Successfully",style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)));
+          //       },
+          //       child: Container(
+          //         height: 60,
+          //         width: 70,
+          //         decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),color: appcolor),
+          //         child: Icon(Icons.favorite,color: Colors.white,),
+          //       ),
+          //     ),
+          //      GestureDetector(
+          //       onTap: (){
+          //          final provider =
+          //                         Provider.of<CartProvider>(context,listen: false);
+          //                     bool isInCart = provider.carts.any(
+          //                         (item) => item.productId == widget.id);
+          //                     if (isInCart) {
+          //                        ScaffoldMessenger.of(context).showSnackBar(
+          //                      _productSnackBar.productSnackbar(context: context)
+                              
+          //                     );
+                            
+          //                     } else {
+          //                        cartapi.addItemToCart(
+          //                         productid: productData.id.toString(),
+          //                         userid: userData.currentUserId.toString(),
+          //                         quanity: productData.quantity.toString());
+                               
+          //                     ScaffoldMessenger.of(context).showSnackBar(
+          //                      _snackBar.customSnackbar(context: context)
+          //                       // SnackBar(
+          //                       //   backgroundColor: greencolor,
+          //                       //   content: const Text(
+          //                       //     'Item added to cart successfully!',
+          //                       //     style: TextStyle(
+          //                       //         color: Colors.white,
+          //                       //         fontWeight: FontWeight.bold),
+          //                       //   ),
+          //                       //   duration: const Duration(seconds: 4),
+          //                       // ),
+          //                     );
+          //                     //  await Navigator.push(
+          //                     //     context,
+          //                     //     MaterialPageRoute(
+          //                     //         builder: (context) => MyCartScreen()));
+          //                     }
 
-            ],
-          )
+          //       },
+          //        child: Container(
+          //         height: 60,
+          //         width: 300,
+          //         decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),color: appcolor),
+          //         child:Row(
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           children: [
+          //              Icon(IconlyLight.bag2,color: Colors.white,),
+          //              SizedBox(width: 10),
+          //              Text('Add to cart',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)
+          //           ],
+          //         )
+          //                      ),
+          //      ),
+
+          //   ],
+          // )
 
 
           // FilledButton.icon(

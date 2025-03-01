@@ -39,7 +39,7 @@ class _WelcomePageState extends State<WelcomePage>{
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Text("DIY Beauty Products & Tips", style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w900),),
+                Text("Glow Graft", style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w900),),
                 const SizedBox(height: 10,),
                 Text("Beauty begins with ingredients you trust", style: TextStyle(color: Colors.white, fontSize: 16),),
                 Text("Let's start with purchase", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold),),

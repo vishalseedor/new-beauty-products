@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:new_diy_beauty_products/Colors/colors.dart';
 import 'package:new_diy_beauty_products/ProductScreen/productdetailsscreen.dart';
 
 class AllProductWidget extends StatefulWidget {
@@ -50,41 +51,13 @@ class _AllProductWidgetState extends State<AllProductWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 6.0),
-                    child: Text(
-                      widget.productname,
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold,fontSize: 14),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                                text: "Price ₹ :  ${widget.price}",
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.green,fontWeight: FontWeight.bold)),
-                                
-
-                           
-                          ],
-                        ),
-                      ),
-                    
-                      // SizedBox(
-                      //   width: 30,
-                      //   height: 30,
-                      //   child: IconButton.filled(
-                      //     padding: EdgeInsets.zero,
-                      //     onPressed: () {},
-                      //     iconSize: 18,
-                      //     icon: const Icon(Icons.add,color: Colors.white,),
-                      //   ),
-                      // )
-                    ],
-                  ),  Text('Creater Name : ${widget.creatername}')
+                  Text(
+                    widget.productname,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold,fontSize: 14),
+                  ), 
+                  
+                  Text('Prize : ₹ ${widget.price}',style: TextStyle(color: appcolor),),
+                   Text('Creater Name : ${widget.creatername}')
                   // SizedBox(height: size.height*0.01),
                   // Text(widget.area)
                 ],

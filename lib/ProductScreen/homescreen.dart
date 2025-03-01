@@ -57,7 +57,7 @@ class _ProductScreenState extends State<ProductScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.asset('assets/sk.png',height: 40,width: 40,
+            child: Image.asset('assets/logo.png',height: 40,width: 40,
             ),
           )
         ],
@@ -338,22 +338,20 @@ class _ProductScreenState extends State<ProductScreen> {
                                       itemCount: product.searchProducts.length,
                                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
-                                        childAspectRatio: 0.9,
+                                        childAspectRatio: 0.67,
                                         crossAxisSpacing: 10,
                                         mainAxisSpacing: 10,
                                       ),
                                       scrollDirection: Axis.vertical,
                                       itemBuilder: (context, index) {
-                                        return SingleChildScrollView(
-                                          child: AllProductWidget(
-                                            id: product.searchProducts[index].id,
-                                            productname: product.searchProducts[index].productName,
-                                            price: product.searchProducts[index].price,
-                                            image: product.searchProducts[index].image,
-                                            creatername: product.searchProducts[index].creatorName,
-                                            
+                                        return AllProductWidget(
+                                          id: product.searchProducts[index].id,
+                                          productname: product.searchProducts[index].productName,
+                                          price: product.searchProducts[index].price,
+                                          image: product.searchProducts[index].image,
+                                          creatername: product.searchProducts[index].creatorName,
                                           
-                                          ),
+                                        
                                         );
                                       },
                                     ),
@@ -364,7 +362,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                       itemCount: product.products.length,
                                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
-                                        childAspectRatio: 0.7,
+                                        childAspectRatio: 0.67,
                                         crossAxisSpacing: 10,
                                         mainAxisSpacing: 10,
                                       ),

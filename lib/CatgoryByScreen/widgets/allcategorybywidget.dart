@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:new_diy_beauty_products/ProductScreen/productdetailsscreen.dart';
 
 
 
@@ -32,7 +33,7 @@ class _AllEachCategoryWidgetState extends State<AllEachCategoryWidget > {
         aspectRatio: 2 / 2.2,
         child: GestureDetector(
           onTap: () {
-        // Navigator.of(context).pushNamed(FilmDetailsPage.routeName,arguments:widget.filmid);
+        Navigator.of(context).pushNamed(ProductDetailsScreen.routeName,arguments:widget.categoryid);
           },
           child: Material(
             child: Container(

@@ -29,7 +29,7 @@ class _AllRecipeWidgetState extends State<AllRecipeWidget> {
           child: Column(
             children: [
               ListTile(
-                leading: Image.asset('assets/sk.png',height: 50,width: 50,),
+                leading: Image.asset('assets/logo.png',height: 50,width: 50,),
                 title: Text('Creator : ${widget.creator}',style: TextStyle(color: appcolor,fontWeight: FontWeight.bold),),
                 subtitle: Text('Category : ${widget.category}',style: TextStyle(color: appbarRightColor,fontWeight: FontWeight.bold),),
               ),
