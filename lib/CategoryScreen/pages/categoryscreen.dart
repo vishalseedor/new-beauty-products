@@ -31,6 +31,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     final size=MediaQuery.of(context).size;
     final category=Provider.of<CategoryProvider>(context);
     return Scaffold(
+      backgroundColor: Colors.grey[200],
         appBar: AppBar(
         
         leading:  IconButton(onPressed: (){
@@ -73,17 +74,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     ))
                                   : SizedBox(
                                       //height: size.height * 0.6,
-                                      child: GridView.builder(
+                                      child: ListView.builder(
                                         scrollDirection: Axis.vertical,
                         itemCount: category.category.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                         // childAspectRatio: 0.98,
-                          crossAxisSpacing: 20,
-                          mainAxisSpacing: 20,
-                        ),
+                      
                         itemBuilder: (context, index) {
                           return AllCategoryWidget(
                             id: category.category[index].id,

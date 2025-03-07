@@ -1,7 +1,5 @@
 
 import 'package:flutter/material.dart';
-
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:new_diy_beauty_products/CartScreen/provider/cartprovider.dart';
 import 'package:new_diy_beauty_products/Colors/colors.dart';
 import 'package:new_diy_beauty_products/FavouriteScreen/provider/favouriteprovider.dart';
@@ -104,24 +102,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
       child: InkWell(
   onTap: () async {
-    setState(() {
+     setState(() {
       isFavorite = !isFavorite;
       
       if (isFavorite) {
-         fav.addItemToFavourites(productid: productData.id.toString(),userid: userData.currentUserId.toString());
-                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  backgroundColor:appcolor,
-                                  content: const Text("Favourite Product Added Successfully",style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)));
-
-     
-      } else {
-         fav.deleteFav(productData.id,userData.currentUserId.toString(),context);
-        
+        fav.addItemToFavourites(
+          productid: productData.id.toString(),
+          userid: userData.currentUserId.toString(),
+        );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: appcolor,
             content: const Text(
-              'Favourite products removed from Favourites!',
+              'Favourite product added successfully!',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -130,7 +123,26 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             duration: const Duration(seconds: 4),
           ),
         );
-     
+      } else {
+        fav.deleteFav(productData.id,userData.currentUserId, context);
+        // Remove the pet from the favorites
+        // favpet.removeItemFromFavourites(
+        //   petid: petData.petid.toString(),
+        //   userid: user.currentUserId.toString(),
+        // );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: appcolor,
+            content: const Text(
+              'Product removed from Favourites!',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            duration: const Duration(seconds: 4),
+          ),
+        );
       }
     });
   },

@@ -120,11 +120,10 @@ class _CartItemState extends State<CartItem> {
                                 children: [
                                    InkWell(
                                     onTap: () {
-                                       setState(() {
-                                 quanity--;
-                                cart.updateQuantity(widget.index, quanity.toString());
-
-                              });
+                                     if (quanity > 1) { // Prevent quantity from going below 1
+        quanity--;
+        cart.updateQuantity(widget.index, quanity.toString());
+      }
                                     },
                                      child: Icon(
                                       Icons.remove,

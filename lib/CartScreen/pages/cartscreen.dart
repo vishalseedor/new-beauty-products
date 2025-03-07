@@ -2,6 +2,7 @@
 import 'package:animate_do/animate_do.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:new_diy_beauty_products/CartScreen/pages/cartemptyscreen.dart';
 import 'package:new_diy_beauty_products/CartScreen/pages/ordersuccessscreen.dart';
 import 'package:new_diy_beauty_products/CartScreen/provider/cartprovider.dart';
@@ -231,14 +232,19 @@ class _CartScreenState extends State<CartScreen> {
                                   color: appcolor,
                                   borderRadius: BorderRadius.circular(6),
                                 ),
-                                child: const Center(
-                                  child: Text(
-                                    'Place Order',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.delivery_dining,color: Colors.white,),
+                                    SizedBox(width: size.width*0.02),
+                                    Text(
+                                      'Place Order',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
                             ),

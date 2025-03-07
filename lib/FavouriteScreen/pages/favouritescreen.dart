@@ -63,6 +63,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         : SizedBox(
                            // height: size.height * 0.6,
                             child: GridView.builder(
+                              scrollDirection: Axis.vertical,
               itemCount: favpet.favourites.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

@@ -120,6 +120,7 @@ class FavouriteProvider extends ChangeNotifier {
           body: body);
 
       if (response.statusCode == 200) {
+        getAllFavouritesData();
         // Request successful
         print('Added to cart successfully');
         print('Response: ${response.body}');

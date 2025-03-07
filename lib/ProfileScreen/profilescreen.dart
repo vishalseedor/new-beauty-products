@@ -2,7 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_diy_beauty_products/BottomNavigationBar/bottomnavigationbar.dart';
 import 'package:new_diy_beauty_products/Colors/colors.dart';
+import 'package:new_diy_beauty_products/ExtraScreens/privacypolicy.dart';
+import 'package:new_diy_beauty_products/ExtraScreens/termsandconditonscreen.dart';
 import 'package:new_diy_beauty_products/LoginScreen/loginscreen.dart';
+import 'package:new_diy_beauty_products/ProfileScreen/editprofilescreen.dart';
 import 'package:new_diy_beauty_products/ProfileScreen/provider/userprovider.dart';
 import 'package:provider/provider.dart';
 
@@ -90,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return CircleAvatar(
               backgroundColor: Colors.grey[100],
               radius: 60,
-              backgroundImage: AssetImage('assets/profile.png'),
+              backgroundImage: NetworkImage(userphoto),
             );
           }),
                   // GestureDetector(
@@ -127,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                           // Navigator.push(context,MaterialPageRoute(builder:(context)=>const pr()));
+                           Navigator.push(context,MaterialPageRoute(builder:(context)=>const ProfileEditScreen()));
                           },
                           child: Icon(
                             Icons.person,
@@ -162,7 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                           // Navigator.push(context,MaterialPageRoute(builder:(context)=>const TermsandConditions()));
+                            Navigator.push(context,MaterialPageRoute(builder:(context)=>const TermsandConditions()));
                           },
                           child: Icon(
                             Icons.book,
@@ -197,7 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         GestureDetector(
                           onTap: (){
-                           // Navigator.push(context,MaterialPageRoute(builder: (context)=>const PrivacyandPolicy()));
+                           Navigator.push(context,MaterialPageRoute(builder: (context)=>const PrivacyandPolicy()));
                           },
                           child: Icon(
                             Icons.privacy_tip,

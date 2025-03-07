@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
           // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              backgroundColor: Colors.green,
+              backgroundColor: appcolor,
               content: const Text(
                 'Invalid email and password',
                 style:
@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: size.height*0.2),
                           Center(
                             child: const Text(
-                              'Glow Graft',
+                              'Glow Craft',
                               style:
                                   TextStyle(fontSize: 28, fontWeight: FontWeight.bold,color: Colors.black),
                             ),

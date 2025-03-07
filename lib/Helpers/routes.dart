@@ -31,7 +31,7 @@ var customRoutes = <String, WidgetBuilder>{
       );
     }
   },
-   'all_carts_screen':(context)=>const CartScreen(),
+  'all_carts_screen':(context)=>const CartScreen(),
  'product_details_screen': (context) {
            String id = ModalRoute.of(context)!.settings.arguments.toString();
            return ProductDetailsScreen(
