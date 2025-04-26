@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:new_diy_beauty_products/BottomNavigationBar/bottomnavigationbar.dart';
 import 'package:new_diy_beauty_products/Colors/colors.dart';
 import 'package:new_diy_beauty_products/ExtraScreens/loadingscreen.dart';
 import 'package:new_diy_beauty_products/ViewDiscussionScreen/pages/adddiscussionscreen.dart';
@@ -33,8 +34,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
         appBar: AppBar(
         
         leading:  IconButton(onPressed: (){
-          Navigator.pop(context);
-        // ignore: prefer_const_constructors
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
         },icon: Icon(Icons.arrow_back,color: Colors.white,)),
         backgroundColor: appcolor,
         title: const Text('Discuusions',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
