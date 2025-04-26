@@ -6,6 +6,7 @@ class ProductModel {
   final String quantity;
   final String price;
   final String creatorName;
+  final String createrid;
   final String description;
 
   ProductModel(
@@ -15,6 +16,7 @@ class ProductModel {
       required this.quantity,
       required this.price,
       required this.creatorName,
+      required this.createrid,
       required this.description});
 
 
@@ -26,6 +28,7 @@ factory  ProductModel.fromJson(Map<String, dynamic> json) {
     quantity : json['quantity'],
     price : json['price'],
     creatorName : json['creator_name'],
+    createrid: json['creator_id'],
     description:json['description']
    
     

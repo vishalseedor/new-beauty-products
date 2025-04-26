@@ -93,12 +93,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
         ),
       ),
     ),  
-    floatingActionButton: FloatingActionButton(
-      backgroundColor: appcolor,
-      onPressed: (){
-      Navigator.push(context, MaterialPageRoute(builder:(context)=>const AddDiscussionScreen()));
-
-    },child: Text('Add',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),),
+    
     );
   }
 }

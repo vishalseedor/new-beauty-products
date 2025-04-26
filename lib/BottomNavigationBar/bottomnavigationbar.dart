@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     const ProductScreen(),
     const CategoryScreen(),
     const CartScreen(),
-    ProfileScreen()
+    const ProfileScreen()
   ];
   int currentPageIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

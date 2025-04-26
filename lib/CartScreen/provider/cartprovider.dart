@@ -39,6 +39,7 @@ class CartProvider extends ChangeNotifier {
 
   double totalAmount = 0.0;
 
+
   void updateQuantity(int index, String newQuantity) {
     _carts[index].quantity = newQuantity;
     calculateTotalPrice();
@@ -58,14 +59,26 @@ class CartProvider extends ChangeNotifier {
     return totalAmount;
   }
 
+  // double calculateTotalPrice() {
+  //   totalAmount = 0.0;
+  //   for (var item in _carts) {
+  //     totalAmount += int.parse(item.price) * int.parse(item.quantity);
+  //   }
+  //   // notifyListeners();
+  //   return double.parse(totalAmount.toString());
+  // }
   double calculateTotalPrice() {
-    totalAmount = 0.0;
-    for (var item in _carts) {
-      totalAmount += int.parse(item.price) * int.parse(item.quantity);
-    }
-    // notifyListeners();
-    return double.parse(totalAmount.toString());
+  totalAmount = 0.0;
+  for (var item in _carts) {
+    totalAmount += int.parse(item.price) * int.parse(item.quantity);
   }
+  // Add delivery charge if there's at least one item in the cart
+  if (_carts.isNotEmpty) {
+    totalAmount += 50;
+  }
+  return double.parse(totalAmount.toString());
+}
+
 
  
 
@@ -198,16 +211,22 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future<void> productQuantityupdate(String cartId, String quantity) async {
+     var body = {
+     
+      'cart_id': cartId.toString(),
+      'quantity': quantity.toString(),
+    };
     final url = Uri.parse(
-        'http://campus.sicsglobal.co.in/Project/Local_farmers_Market/api/update_quantity.php?cart_id=$cartId&quantity=$quantity');
+        'http://campus.sicsglobal.co.in/Project/Diy_product/api/update_quantity.php?cart_id=$cartId&quantity=$quantity');
+        
 
     try {
-      final response = await https.put(url);
+      final response = await https.post(url);
 
-      //   body: {'quantity': quantity.toString()},
+     
       // );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200) {    print(body);
         // Request successful, handle response here if needed
         print('Quantity updated successfully');
       } else {
@@ -228,7 +247,9 @@ class CartProvider extends ChangeNotifier {
       final response = await https.get(url);
 
       if (response.statusCode == 200) {
-        clearCart(userid: userid);
+     
+       // clearCart(userid: userid);
+        
 
         print(response.body);
 

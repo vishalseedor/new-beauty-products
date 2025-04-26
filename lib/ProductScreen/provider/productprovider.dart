@@ -74,10 +74,9 @@ class ProductProvider with ChangeNotifier {
                 price: productDetails[i]['price'].toString(),
                 image: productDetails[i]['image'].toString(),
                 creatorName: productDetails[i]['creator_name'].toString(),
+                createrid: productDetails[i]['creator_id'].toString(),
                 quantity: productDetails[i]['quantity'].toString(),
                 description: productDetails[i]['description'].toString()
-
-               
                
                ),
           );
@@ -131,6 +130,7 @@ class ProductProvider with ChangeNotifier {
                 price: productDetails[i]['price'].toString(),
                 image: productDetails[i]['image'].toString(),
                 creatorName: productDetails[i]['creator_name'].toString(),
+                createrid: productDetails[i]['creator_id'].toString(),
                 quantity: productDetails[i]['quantity'].toString(),
                 description: productDetails[i]['description'].toString()
 

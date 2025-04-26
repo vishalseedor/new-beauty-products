@@ -11,7 +11,7 @@ class CartEmptyScreen extends StatefulWidget {
 }
 
 class _CartEmptyScreenState extends State<CartEmptyScreen> {
-
+ 
   @override
   Widget build(BuildContext context) {
     final size=MediaQuery.of(context).size;

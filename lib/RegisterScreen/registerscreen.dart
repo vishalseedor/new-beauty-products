@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as https;
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:new_diy_beauty_products/Colors/colors.dart';
 import 'package:new_diy_beauty_products/LoginScreen/loginscreen.dart';
@@ -20,129 +20,89 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
    bool _passwordVisible = false;
   Future<void> registerBeautyProducts(
-    File? imageFile,
     String name,
     String phone,
     String email,
     String password,
+    String confirmpassword,
     String address,
+   // String date
+
   ) async {
     const url =
         'http://campus.sicsglobal.co.in/Project/Diy_product/api/user_registration.php';
-          try {
-    var request = https.MultipartRequest('POST', Uri.parse(url));
+  
 
-    // Attach the image file if selected
-    if (imageFile != null) {
-      request.files.add(await https.MultipartFile.fromPath('image', imageFile.path));
-    }
-
-    // Add other form fields
-    request.fields.addAll({
+    Map<String, String> body = {
       'name': name,
       'phone': phone,
       'email': email,
       'password': password,
+      'password':confirmpassword,
       'address': address,
-    });
+     // 'creation_date':date
+    };
 
-    var response = await request.send();
-    var responseBody = await response.stream.bytesToString();
-    var jsonData = json.decode(responseBody);
+    try {
+      final response = await http.post(Uri.parse(url), body: body);
+      var jsonData = json.decode(response.body);
 
       if (response.statusCode == 200) {
         if (jsonData['status'] == true) {
-         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Registation Successful!'),
-          duration: const Duration(seconds: 4),
-         ));
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const LoginScreen()));
-          // print(body);
-          // print("Response body${response.body}");
-          // print(body);
-          // print("Response body${response.body}");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: appcolor,
+              content: const Text(
+                'Register Successful!',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              duration: const Duration(seconds: 4),
+            ),
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginScreen()),
+          );
+          print(body);
+          print("Response body${response.body}");
+
           print('Registration successful');
-        } else if (jsonData['status'] == false) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('User Already Exsists!'),
-          duration: const Duration(seconds: 4),
-         ));
-         
-          print('Error: ${response.statusCode}');
         } else {
-          print('Not working this api');
+          jsonData['status'] == false;
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: appcolor,
+              content: const Text(
+                'User Already Exists !',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              duration: const Duration(seconds: 4),
+            ),
+          );
+          print('Error: ${response.statusCode}');
         }
+      } else {
+        print('fffff');
       }
     } catch (error) {
       print('Error: $error');
     }
   }
 
-    // Map<String, String> body = {
-    //   'name': name,
-    //   'phone': phone,
-    //   'email': email,
-    //   'password': password,
-    //   'address': address,
-    // };
-
-  //   try {
-  //     final response = await http.post(Uri.parse(url), body: body);
-  //     var jsonData = json.decode(response.body);
-
-  //     if (response.statusCode == 200) {
-  //       if (jsonData['status'] == true) {
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(
-  //             backgroundColor: appcolor,
-  //             content: const Text(
-  //               'Register Successful!',
-  //               style: TextStyle(
-  //                 color: Colors.white,
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //             ),
-  //             duration: const Duration(seconds: 4),
-  //           ),
-  //         );
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => const LoginScreen()),
-  //         );
-  //         print(body);
-  //         print("Response body${response.body}");
-
-  //         print('Registration successful');
-  //       } else {
-  //         jsonData['status'] == false;
-  //         // ignore: use_build_context_synchronously
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(
-  //             backgroundColor: appcolor,
-  //             content: const Text(
-  //               'User Already Exists !',
-  //               style: TextStyle(
-  //                 color: Colors.white,
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //             ),
-  //             duration: const Duration(seconds: 4),
-  //           ),
-  //         );
-  //         print('Error: ${response.statusCode}');
-  //       }
-  //     } else {
-  //       print('fffff');
-  //     }
-  //   } catch (error) {
-  //     print('Error: $error');
-  //   }
-  // }
-
   TextEditingController namecontroller = TextEditingController();
   TextEditingController phonecontroller = TextEditingController();
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passswordcontroller = TextEditingController();
   TextEditingController addresscontroller = TextEditingController();
+  TextEditingController datecontroller =TextEditingController();
+  TextEditingController confirmPasswordController=TextEditingController();
    XFile? file;
     String? base64Image;
   final ImagePicker _picker = ImagePicker();
@@ -196,38 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       SizedBox(height: size.height * 0.02),
-                      Center(
-                        child: Stack(children: [
-                          CircleAvatar(
-                            radius: 60,
-                            backgroundImage: file != null ? FileImage(File(file!.path)) : null,
-                child: file == null ? const Icon(Icons.camera_alt, size: 50, color: Colors.black) : null,
-                          ),
-                          Positioned(
-                              right: 5,
-                              bottom: 0,
-                              child: InkWell(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (builder) => bottomSheet());
-                                },
-                                child: Container(
-                                    child: const Icon(
-                                      Icons.camera_alt_outlined,
-                                      color: Colors.black,
-                                      size: 20,
-                                    ),
-                                    padding: const EdgeInsets.all(7.5),
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 1, color: Colors.white),
-                                        borderRadius:
-                                            BorderRadius.circular(90.0),
-                                        color: Colors.grey[200])),
-                              ))
-                        ]),
-                      ), SizedBox(height: size.height * 0.02),
+                     
                    
                       TextFormField(
                         style: const TextStyle(color: Colors.white),
@@ -388,6 +317,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
         return null;
       },
     ),
+    SizedBox(height: size.height * 0.03),
+TextFormField(
+  style: const TextStyle(color: Colors.white),
+  controller: confirmPasswordController,
+  obscureText: !_passwordVisible, // Toggle password visibility
+  keyboardType: TextInputType.text,
+  decoration: InputDecoration(
+    errorStyle: const TextStyle(color: Colors.white),
+    fillColor: Colors.white.withOpacity(0.3),
+    filled: true,
+    prefixIcon: const Icon(
+      Icons.lock_outline,
+      color: Colors.white,
+    ),
+    hintText: 'Confirm Password',
+    hintStyle: const TextStyle(
+      fontSize: 13,
+      color: Colors.white,
+    ),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(70),
+      borderSide: BorderSide.none,
+    ),
+    suffixIcon: IconButton(
+      icon: Icon(
+        _passwordVisible ? Icons.visibility_off : Icons.visibility,
+        color: Colors.white,
+      ),
+      onPressed: () {
+        setState(() {
+          _passwordVisible = !_passwordVisible;
+        });
+      },
+    ),
+  ),
+  validator: (value) {
+    if (value!.isEmpty) {
+      return 'Please confirm your password';
+    } else if (value != passswordcontroller.text) {
+      return 'Passwords do not match';
+    }
+    return null;
+  },
+),
+
                      
                       SizedBox(height: size.height * 0.03),
                       TextFormField(
@@ -421,6 +395,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         },
                       ),
+                       
+          
 
                       SizedBox(height: size.height * 0.04),
 
@@ -430,12 +406,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
                             registerBeautyProducts(
-                               File(file!.path),
+                             
                               namecontroller.text.toString(),
                               phonecontroller.text.toString(),
                               emailcontroller.text.toString(),
                               passswordcontroller.text.toString(),
+                              confirmPasswordController.text.toString(),
                               addresscontroller.text.toString(),
+                           //   datecontroller.text.toString()
                             );
                           }
                         },
@@ -450,58 +428,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-    Widget bottomSheet() {
-    return Container(
-        height: 100,
-        width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: Column(
-          children: [
-            Text(
-              "Choose Profile photo",
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    pickImage(ImageSource.camera);
-                  },
-                  icon: Icon(
-                    Icons.camera,
-                    color: Colors.white,
-                  ),
-                  label: Text(
-                    "Camera",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(backgroundColor: appcolor),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                  pickImage(ImageSource.gallery);
-                  },
-                  icon: Icon(
-                    Icons.image,
-                    color: Colors.white,
-                  ),
-                  label: Text(
-                    "Gallery",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(backgroundColor: appcolor),
-                ),
-              ],
-            )
-          ],
-        ));
-  }
 }
-

@@ -118,19 +118,32 @@ class _CartItemState extends State<CartItem> {
                                   true,
                                 ],
                                 children: [
-                                   InkWell(
-                                    onTap: () {
-                                     if (quanity > 1) { // Prevent quantity from going below 1
+                                  InkWell(
+  onTap: () {
+    if (quanity > 1) { 
+      setState(() { // Ensure UI updates
         quanity--;
-        cart.updateQuantity(widget.index, quanity.toString());
-      }
-                                    },
-                                     child: Icon(
-                                      Icons.remove,
-                                      size: 20,
-                                      color: appcolor,
-                                                                     ),
-                                   ),
+      });
+      cart.updateQuantity(widget.index, quanity.toString());
+    } else {
+      cart.deleteCart(widget.cartid, context);
+      // Show out of stock message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: appcolor,
+          content: Text("Item removed from cart",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          duration: Duration(seconds: 4),
+        ),
+      );
+    }
+  },
+  child: Icon(
+    Icons.remove,
+    size: 20,
+    color: appcolor,
+  ),
+),
+
                                   Text(quanity.toString(),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
                                 InkWell(
                                   onTap: () {

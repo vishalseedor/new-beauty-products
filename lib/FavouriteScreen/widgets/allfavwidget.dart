@@ -93,7 +93,7 @@ class _AllFavouriteWidgetState extends State<AllFavouriteWidget > {
                   children: [
                     Text(
                       widget.name,
-                                      style: TextStyle(color:appcolor,fontWeight: FontWeight.bold,),
+                                      style: TextStyle(color:appcolor,fontWeight: FontWeight.bold,fontSize: 12),
                     ),
                     Text('₹ : ${widget.price}',style: TextStyle(fontWeight: FontWeight.w900,fontSize: 11),)
                   

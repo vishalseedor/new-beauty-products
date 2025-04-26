@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:new_diy_beauty_products/BottomNavigationBar/bottomnavigationbar.dart';
 import 'package:new_diy_beauty_products/Colors/colors.dart';
 import 'package:new_diy_beauty_products/ProfileScreen/provider/userprovider.dart';
+import 'package:new_diy_beauty_products/ViewDiscussionScreen/pages/view_discuussion.dart';
 import 'package:new_diy_beauty_products/ViewDiscussionScreen/provider/discussionprovider.dart';
 import 'package:provider/provider.dart';
 
 class AddDiscussionScreen extends StatefulWidget {
-  const AddDiscussionScreen({super.key});
+  final String id;
+  const AddDiscussionScreen({super.key,required this.id});
 
   @override
   State<AddDiscussionScreen> createState() => _AddDiscussionScreenState();
@@ -20,12 +22,15 @@ class _AddDiscussionScreenState extends State<AddDiscussionScreen> {
   Widget build(BuildContext context) {
  final discussion=Provider.of<Discussionprovider>(context);
   final userData=Provider.of<UserProvider>(context);
+ 
     Size size=MediaQuery.of(context).size;
+    final discussData =
+        Provider.of<Discussionprovider>(context).discussions.firstWhere((element) => element.id == widget.id);
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: appcolor,
-        title: Text('Add Discussion',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+        title: Text('Disscussion Answer',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -38,7 +43,7 @@ class _AddDiscussionScreenState extends State<AddDiscussionScreen> {
               children: [
                 SizedBox(height: size.height*0.15),
                 Center(child: Image.asset('assets/discuss.png',scale: 2)),
-                Text('Discussion',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                Text('Answer',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
                 SizedBox(height: size.height*0.01),
                 TextFormField(
                   controller: discussioncontroller,
@@ -46,7 +51,7 @@ class _AddDiscussionScreenState extends State<AddDiscussionScreen> {
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none),
                     fillColor: Colors.grey[200],
                     filled: true,
-                    hintText: 'Add Discussion',
+                    hintText: 'Add Discussion answer',
                     hintStyle: TextStyle(fontSize: 13)
                   ),
                   validator: (value) {
@@ -66,7 +71,11 @@ class _AddDiscussionScreenState extends State<AddDiscussionScreen> {
                     onPressed: ()async{
             
                          if (_formKey.currentState!.validate()) {
-                                  discussion.addDiscussion(discussionId: '1',answers: discussioncontroller.text.toString(),userId:userData.currentUserId.toString() );                        
+                             
+                                 discussion.addDiscussion(userId: userData.currentUserId.toString(),discussionId: discussData.id.toString(),answers: discussioncontroller.text.toString());  
+                                 print(userData.currentUserId.toString());
+                                 print(discussData.id.toString()) ;
+                                 print(discussioncontroller.text.toString());                    
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                     backgroundColor: appcolor,
                                     content: const Text("Disccussion added successfully",style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)));
@@ -81,6 +90,9 @@ class _AddDiscussionScreenState extends State<AddDiscussionScreen> {
           ),
         ),
       ),
+     
     );
+    
   }
+  
 }

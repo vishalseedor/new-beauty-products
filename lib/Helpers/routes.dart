@@ -4,11 +4,15 @@ import 'package:new_diy_beauty_products/CartScreen/pages/cartscreen.dart';
 import 'package:new_diy_beauty_products/CategoryScreen/pages/categoryscreen.dart';
 import 'package:new_diy_beauty_products/CatgoryByScreen/pages/categorybyproductscreen.dart';
 import 'package:new_diy_beauty_products/FavouriteScreen/pages/favouritescreen.dart';
+import 'package:new_diy_beauty_products/OrderScreen/screen/orderscreen.dart';
 import 'package:new_diy_beauty_products/ProductScreen/homescreen.dart';
 import 'package:new_diy_beauty_products/ProductScreen/productdetailsscreen.dart';
 import 'package:new_diy_beauty_products/ReciepeScreen/pages/recipedetailsscreen.dart';
 import 'package:new_diy_beauty_products/ReciepeScreen/pages/recipescreen.dart';
+import 'package:new_diy_beauty_products/TipsScreen/design/TipsScreen.dart';
+import 'package:new_diy_beauty_products/TipsScreen/design/tipsdetailsscreen.dart';
 import 'package:new_diy_beauty_products/ViewDiscussionScreen/pages/discussionscreen.dart';
+import 'package:new_diy_beauty_products/ViewDiscussionScreen/pages/view_discuussion.dart';
 
 var customRoutes = <String, WidgetBuilder>{
     'all_category_screen': (context) => const  CategoryScreen(),
@@ -44,5 +48,15 @@ var customRoutes = <String, WidgetBuilder>{
            id: id,
     ); 
   },
+   'tips_details_screen': (context) {
+           String id = ModalRoute.of(context)!.settings.arguments.toString();
+           return Tipsdetailsscreen(
+           id: id,
+    ); 
+  },
+  'all_orders_screen':(context)=>MyOrdersScreen(),
+   'all_tips_screen':(context)=>Tipsscreen(),
+   //'view_discussion_screen':(context)=>ViewDiscuussion(userId: '',discussionId: '',)
+
          
 };

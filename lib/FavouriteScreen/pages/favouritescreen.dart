@@ -42,48 +42,50 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
         backgroundColor: appcolor,
         title: const Text('Favouitres',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
       ),
-    body:FadeInUp(
-       duration:  const Duration(milliseconds: 1500),
-      child: favpet.loadingSpinner
-                    ? const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          LoadingScreen(title: 'Loading'),
-                          CircularProgressIndicator(
-                            color:Colors.green,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                       
-                        ],
-                      )
-                    : favpet.favourites.isEmpty
-                        ? EmptyfavScreen()
-                        : SizedBox(
-                           // height: size.height * 0.6,
-                            child: GridView.builder(
-                              scrollDirection: Axis.vertical,
-              itemCount: favpet.favourites.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.85,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-              ),
-              itemBuilder: (context, index) {
-                return AllFavouriteWidget(
-                  id: favpet.favourites[index].id,
-                  name: favpet.favourites[index].productName,
-                  image: favpet.favourites[index].image,
-                  price: favpet.favourites[index].price,
-
-                  );
-              },
-            )
-                          ),
+    body:SingleChildScrollView(
+      child: FadeInUp(
+         duration:  const Duration(milliseconds: 1500),
+        child: favpet.loadingSpinner
+                      ? const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            LoadingScreen(title: 'Loading'),
+                            CircularProgressIndicator(
+                              color:Colors.green,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                         
+                          ],
+                        )
+                      : favpet.favourites.isEmpty
+                          ? EmptyfavScreen()
+                          : SizedBox(
+                             // height: size.height * 0.6,
+                              child: GridView.builder(
+                                scrollDirection: Axis.vertical,
+                itemCount: favpet.favourites.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.85,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemBuilder: (context, index) {
+                  return AllFavouriteWidget(
+                    id: favpet.favourites[index].id,
+                    name: favpet.favourites[index].productName,
+                    image: favpet.favourites[index].image,
+                    price: favpet.favourites[index].price,
+      
+                    );
+                },
+              )
+                            ),
+      ),
     ),  
     );
   }

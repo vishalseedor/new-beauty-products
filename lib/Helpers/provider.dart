@@ -4,9 +4,11 @@ import 'package:new_diy_beauty_products/CategoryScreen/provider/categoryprovider
 import 'package:new_diy_beauty_products/CatgoryByScreen/provider/categorybyprovider.dart';
 import 'package:new_diy_beauty_products/FavouriteScreen/provider/favouriteprovider.dart';
 import 'package:new_diy_beauty_products/Feedbackscreen/feedbackprovider.dart';
+import 'package:new_diy_beauty_products/OrderScreen/provider/orderprovider.dart';
 import 'package:new_diy_beauty_products/ProductScreen/provider/productprovider.dart';
 import 'package:new_diy_beauty_products/ProfileScreen/provider/userprovider.dart';
 import 'package:new_diy_beauty_products/ReciepeScreen/provider/reciepeprovider.dart';
+import 'package:new_diy_beauty_products/TipsScreen/api/tipsprovider.dart';
 
 import 'package:new_diy_beauty_products/ViewDiscussionScreen/provider/discussionprovider.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,8 @@ List<SingleChildWidget> multiprovider = [
     ChangeNotifierProvider(create: (context)=>CartProvider()),
     ChangeNotifierProvider(create: (context)=>FavouriteProvider()),
      ChangeNotifierProvider(create: (context)=>FeedbackProvider()),
+     ChangeNotifierProvider(create: (context)=>Orderprovider()),
+     ChangeNotifierProvider(create: (context)=>Tipsprovider())
 
  
 ];

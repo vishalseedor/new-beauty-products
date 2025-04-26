@@ -7,6 +7,7 @@ import 'package:new_diy_beauty_products/ProductScreen/pages/globalsnackbar.dart'
 import 'package:new_diy_beauty_products/ProductScreen/pages/productsnackbar.dart';
 import 'package:new_diy_beauty_products/ProductScreen/provider/productprovider.dart';
 import 'package:new_diy_beauty_products/ProfileScreen/provider/userprovider.dart';
+import 'package:new_diy_beauty_products/ViewDiscussionScreen/provider/discussionprovider.dart';
 import 'package:provider/provider.dart';
 
 
@@ -36,14 +37,219 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         final cartapi = Provider.of<CartProvider>(context, listen: false);
     final userData = Provider.of<UserProvider>(context,   listen: false);
     final fav=Provider.of<FavouriteProvider>(context,listen: false);
+    final enquiry=Provider.of<Discussionprovider>(context,listen: false);
+    
+
        
       final productData =
         Provider.of<ProductProvider>(context).products.firstWhere((element) => element.id == widget.id);
+
+  final TextEditingController _messageController = TextEditingController();
+//  void _openChatDialog(BuildContext context) {
+//   showDialog(
+//     context: context,
+//     builder: (context) {
+//       return StatefulBuilder(
+//         builder: (context, setState) { 
+//           return AlertDialog(
+           
+//             title: Row(
+//               children: [
+//                 Icon(Icons.chat_bubble,color: appcolor,size: 30,),
+//                 SizedBox(width: 8,),
+//              Text("Enquiry Support",style: TextStyle(color:appcolor,fontSize: 20,fontWeight: FontWeight.bold),),
+//               ],
+//             ),
+//             content: SizedBox(
+//               height: 120,
+//               width: 300,
+//               child: Column(
+//                 children: [
+                 
+//                   Expanded(
+//                     child: ListView.builder(
+//                       itemCount: messages.length,
+//                       itemBuilder: (context, index) {
+//                         return Align(
+//                           alignment: Alignment.centerLeft,
+//                           child: Container(
+//                             padding: const EdgeInsets.all(8),
+//                             margin: const EdgeInsets.symmetric(vertical: 4),
+//                             decoration: BoxDecoration(
+//                               color: appcolor,
+//                               borderRadius: BorderRadius.circular(8),
+//                             ),
+//                             child: Text(messages[index],style: TextStyle(color: Colors.white),),
+//                           ),
+//                         );
+//                       },
+//                     ),
+//                   ),
+                
+//                   Row(
+//                     children: [
+//                       Expanded(
+//                         child: TextField(
+//                           controller: _messageController,
+//                           decoration: const InputDecoration(hintText: "Type a message...",hintStyle: TextStyle(fontWeight: FontWeight.bold)),
+//                         ),
+//                       ),
+//                       IconButton(
+//                         icon:  Icon(Icons.send, color:appcolor ),
+//                         onPressed: () {
+//                           if (_messageController.text.isNotEmpty) {
+                            
+//                             setState(() {
+//                              enquiry.addEnquiry(senderId: '1',reciverId: '3',message: _messageController.text);
+//                              //  messages.add(_messageController.text);
+//                             });
+//                             _messageController.clear();
+//                           }
+//                         },
+//                       ),
+//                     ],
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             actions: [
+//               ElevatedButton(
+//                 style: ElevatedButton.styleFrom(backgroundColor: appcolor),
+//                 onPressed: () => Navigator.pop(context),
+//                 child:  Text("Close",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+//               ),
+//             ],
+//           );
+//         },
+//       );
+//     },
+//   );
+// }
+void _openChatDialog(BuildContext context) {
+  String enteredMessage = ""; // Store the entered message
+  
+  showDialog(
+    context: context,
+    builder: (context) {
+      return StatefulBuilder(
+        builder: (context, setState) { 
+          return AlertDialog(
+            title: Row(
+              children: [
+                Icon(Icons.chat_bubble, color: appcolor, size: 30),
+                SizedBox(width: 8),
+                Text(
+                  "Enquiry Support",
+                  style: TextStyle(
+                    color: appcolor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ],
+            ),
+            content: SizedBox(
+              height: 120,
+              width: 300,
+              child: Column(
+                children: [
+                  // Show the latest message
+                  enteredMessage.isNotEmpty
+                      ? Container(
+                          padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.symmetric(vertical: 4),
+                          decoration: BoxDecoration(
+                            color: appcolor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            enteredMessage,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      : Text(
+                          "Type a message below...",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+
+                  Spacer(),
+
+                  // Text input field
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _messageController,
+                          decoration: const InputDecoration(
+                            hintText: "Type a message...",
+                            hintStyle: TextStyle(fontWeight: FontWeight.bold)
+                          ),
+                        ),
+                      ),
+                     IconButton(
+  icon: Icon(Icons.send, color: appcolor),
+  onPressed: () {
+    if (_messageController.text.isNotEmpty) {
+      setState(() {
+        enteredMessage = _messageController.text; // Store the new message
+        enquiry.addEnquiry(
+          senderId: userData.currentUserId.toString(),
+          reciverId: productData.createrid.toString(),
+          message: _messageController.text,
+        );
+      });
+
+      _messageController.clear();
+
+      // Close the dialog first
+      Navigator.pop(context);
+
+      // Show the Snackbar after closing the dialog
+      Future.delayed(Duration.zero, () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: appcolor,
+            duration: Duration(seconds: 3),
+            content: Text(
+              'Enquiry Added',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ),
+        );
+      });
+    }
+  },
+),
+
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: appcolor),
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  "Close",
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
+}
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor:Color.fromARGB(255, 12, 117, 14),
         title: const Text("Product Details",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
+        actions: [
+        
+        ],
        
       ),
       body: ListView(

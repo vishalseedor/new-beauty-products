@@ -6,7 +6,7 @@ class UserData {
  final String phone;
  final String email;
  final String password;
- final String image;
+// final String image;
 
 
   UserData(
@@ -14,8 +14,8 @@ class UserData {
       required this.name,
       required this.phone,
       required this.email,
-      required this.password,
-      required this.image,
+      required this.password, 
+      //required this.image,
    
       
       });
@@ -27,7 +27,7 @@ class UserData {
      phone: json['phone'], 
      email: json['email'],
       password: json['password'],
-        image: json['image'],
+        //image: json['image'],
 );
   }
 }

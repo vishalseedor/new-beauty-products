@@ -57,7 +57,7 @@ class _AllProductWidgetState extends State<AllProductWidget> {
                   ), 
                   
                   Text('Prize : ₹ ${widget.price}',style: TextStyle(color: appcolor),),
-                   Text('Creater Name : ${widget.creatername}')
+                   Text('Creater Name : ${widget.creatername}',style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),)
                   // SizedBox(height: size.height*0.01),
                   // Text(widget.area)
                 ],

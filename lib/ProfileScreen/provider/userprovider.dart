@@ -41,7 +41,22 @@ class UserProvider with ChangeNotifier {
 
   String? currentUserId;
   void setCurrentUserId(String userId) {
-    currentUserId = userId;
+    currentUserId = userId; 
+    notifyListeners();
+  }
+    String? currentUsername;
+  void setCurrentUserName(String userName) {
+    currentUsername = userName;
+    notifyListeners();
+  }
+    String? currentUseremail;
+  void setCurrentUseremail(String useremail) {
+    currentUseremail = useremail;
+    notifyListeners();
+  }
+    String? currentUserphone;
+  void setCurrentUserphone(String userphone) {
+    currentUserphone = userphone;
     notifyListeners();
   }
 
@@ -72,8 +87,9 @@ class UserProvider with ChangeNotifier {
                 name: userDetails[i]['name'].toString(),
                 email: userDetails[i]['email'].toString(),
                 phone: userDetails[i]['phone'].toString(),
-                password: userDetails[i]['password'].toString(),
-                image: userDetails[i]['image'].toString(),
+                password: userDetails[i]['password'].toString(), 
+             //   image: userDetails[i]['image'] != null ? userDetails[i]['image'].toString() : "",
+
               
                 
                 

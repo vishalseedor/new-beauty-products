@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: size.height*0.2),
                           Center(
                             child: const Text(
-                              'Glow Craft',
+                              'GlowWhisk',
                               style:
                                   TextStyle(fontSize: 28, fontWeight: FontWeight.bold,color: Colors.black),
                             ),
@@ -211,14 +211,24 @@ class _LoginScreenState extends State<LoginScreen> {
              },
             ),
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(60),borderSide: BorderSide.none)),
-                                 validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            else{
-                              return null;
-                            }
-                          },
+                                validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your password';
+    }
+    // Regular expression to check for at least one special character
+    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+      return 'Password must contain at least one special character';
+    }
+    return null;
+  },
+                          //        validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return 'Please enter your password';
+                          //   }
+                          //   else{
+                          //     return null;
+                          //   }
+                          // },
                           ),
                           SizedBox(
                             height: size.height * 0.02,
